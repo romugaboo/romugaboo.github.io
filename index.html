@@ -130,6 +130,17 @@
   .body { padding: 14px 14px 16px; }
   .body svg { width: 28px; height: 28px; display: block; margin-bottom: 12px; color: var(--sea); }
   .name { font-size: 18px; font-weight: 500; line-height: 1.15; }
+
+  /* the text lights up under the pointer (and under keyboard focus) */
+  h1, .name, .hint { transition: text-shadow .22s ease, color .22s ease; }
+  a.win:hover .name, a.win:focus-visible .name {
+    color: #0A6C8A;
+    text-shadow: 0 0 2px #fff, 0 0 10px rgba(69, 175, 201, .85), 0 0 24px rgba(110, 208, 188, .75);
+  }
+  a.win:hover .hint, a.win:focus-visible .hint { text-shadow: 0 0 10px rgba(69, 175, 201, .55); }
+  h1:hover {
+    text-shadow: 0 1px 0 rgba(255, 255, 255, .7), 0 0 14px rgba(69, 175, 201, .8), 0 0 32px rgba(110, 208, 188, .8);
+  }
   .hint { margin-top: 2px; font-size: 13px; color: var(--ink-soft); }
 
   .wide .body { display: flex; align-items: center; gap: 14px; }
@@ -151,7 +162,7 @@
     .win.wide { grid-column: auto; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .win { transition: none; }
+    .win, h1, .name, .hint { transition: none; }
     a.win:hover { transform: none; }
   }
 </style>
