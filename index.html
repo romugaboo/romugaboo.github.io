@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>romugaboo</title>
+<meta name="description" content="Lives, vídeos e widgets da romugaboo. Todos os links em um lugar só.">
+<meta property="og:title" content="romugaboo">
+<meta property="og:description" content="Lives, vídeos e widgets. Todos os links em um lugar só.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#8FD8F0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* The palette is the stream brand's (live-romugaboo/marca): the sky-to-
+     water gradient of the orb, the dark teal ink, white glass. */
+  :root {
+    --ink: #0B4E6B;
+    --ink-soft: #3E7C93;
+    --sky-1: #DFF8FF;
+    --sky-2: #8FD8F0;
+    --sea: #45AFC9;
+    --mint: #6ED0BC;
+    --foam: #9BE7D2;
+    --leaf: #7FD957;
+    --paper: #F6F1E7;
+    --glass: #FFFFFF;
+    --shadow: rgba(4, 52, 78, .16);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* Paper with detail, painted on the root so it always covers the whole
+     page: a faint dot grid like a notebook, and two soft washes of the
+     brand's sky and mint that fade out completely (no visible edge). */
+  html {
+    -webkit-text-size-adjust: 100%;
+    min-height: 100%;
+    background-color: var(--paper);
+    background-image:
+      radial-gradient(circle, rgba(11, 78, 107, .13) 1.1px, transparent 1.6px),
+      radial-gradient(ellipse farthest-corner at 100% 0%, rgba(143, 216, 240, .55) 0%, rgba(143, 216, 240, 0) 55%),
+      radial-gradient(ellipse farthest-corner at 0% 100%, rgba(155, 231, 210, .55) 0%, rgba(155, 231, 210, 0) 55%);
+    background-size: 22px 22px, 100% 100%, 100% 100%;
+    background-repeat: repeat, no-repeat, no-repeat;
+  }
+
+  body {
+    min-height: 100vh;
+    font-family: Fredoka, "Segoe UI", system-ui, sans-serif;
+    color: var(--ink);
+    display: flex;
+    justify-content: center;
+    padding: 40px 16px 32px;
+  }
+
+  main { width: 100%; max-width: 440px; }
+
+  /* ---- header: the orb and the word, as in the brand lockup ---- */
+  header { position: relative; text-align: center; margin-bottom: 26px; }
+
+  /* small hand-placed details around the orb */
+  .deco { position: absolute; pointer-events: none; }
+  .deco.s1 { left: calc(50% - 96px); top: 14px; width: 22px; color: var(--sea); }
+  .deco.s2 { left: calc(50% + 70px); top: 2px; width: 14px; color: var(--mint); }
+  .deco.s3 { left: calc(50% + 86px); top: 66px; width: 18px; color: var(--sky-2); }
+  .deco.leaf { left: calc(50% - 104px); top: 58px; width: 34px; }
+
+  .orb {
+    position: relative;
+    width: 96px; height: 96px;
+    margin: 0 auto 14px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: linear-gradient(180deg, var(--sky-1) 0%, var(--sky-2) 30%, var(--sea) 62%, var(--mint) 84%, var(--foam) 100%);
+    box-shadow: inset 0 0 0 3px rgba(255, 255, 255, .9), 0 8px 20px rgba(4, 40, 58, .3);
+  }
+  .orb::before {
+    content: "";
+    position: absolute; left: 8%; right: 8%; top: 4%; height: 44%;
+    border-radius: 50%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, .85), rgba(255, 255, 255, .12));
+  }
+  .orb svg {
+    position: absolute; left: 12%; top: 12%; width: 76%; height: 76%;
+    filter: drop-shadow(0 1px 1px rgba(4, 40, 58, .5));
+  }
+
+  h1 {
+    font-size: 34px; font-weight: 600; letter-spacing: .01em; line-height: 1;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, .7);
+  }
+  .tagline { margin-top: 8px; font-size: 15px; color: var(--ink-soft); }
+
+  /* ---- the links: little windows on a two-column grid ---- */
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  .win {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--glass);
+    box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .95), 0 6px 16px var(--shadow);
+    transition: transform .16s ease, box-shadow .16s ease;
+  }
+  .win.wide { grid-column: span 2; }
+  a.win:hover { transform: translateY(-3px); box-shadow: inset 0 0 0 1.5px #fff, 0 12px 24px rgba(4, 52, 78, .22); }
+  a.win:active { transform: translateY(0); }
+  a.win:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+
+  .bar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 6px 12px;
+    font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+    font-size: 12px; letter-spacing: .02em;
+    color: #fff;
+    background: linear-gradient(180deg, var(--sky-2), var(--sea));
+    text-shadow: 0 1px 0 rgba(4, 52, 78, .35);
+  }
+  .dots { display: flex; gap: 5px; }
+  .dots i { width: 8px; height: 8px; border-radius: 50%; background: rgba(255, 255, 255, .85); }
+  .dots i:last-child { background: var(--leaf); }
+
+  .body { padding: 14px 14px 16px; }
+  .body svg { width: 28px; height: 28px; display: block; margin-bottom: 12px; color: var(--sea); }
+  .name { font-size: 18px; font-weight: 500; line-height: 1.15; }
+  .hint { margin-top: 2px; font-size: 13px; color: var(--ink-soft); }
+
+  .wide .body { display: flex; align-items: center; gap: 14px; }
+  .wide .body svg { width: 38px; height: 38px; margin: 0; flex: none; }
+  .wide .text { flex: 1; min-width: 0; }
+  .go { flex: none; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center;
+        background: linear-gradient(180deg, var(--sky-2), var(--sea)); color: #fff;
+        box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .8); }
+  .wide .body .go svg { width: 18px; height: 18px; margin: 0; color: #fff; }
+
+  /* on a wide screen the column sits in the middle of the page instead
+     of hanging from the top */
+  @media (min-width: 720px) and (min-height: 640px) {
+    body { align-items: center; padding-top: 24px; padding-bottom: 24px; }
+    main { max-width: 480px; }
+  }
+  @media (max-width: 360px) {
+    .grid { grid-template-columns: 1fr; }
+    .win.wide { grid-column: auto; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .win { transition: none; }
+    a.win:hover { transform: none; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <!-- the rabbit, from live-romugaboo/marca/src/coelho.js -->
+    <div class="orb" aria-hidden="true">
+      <svg viewBox="0 0 24 24">
+        <g fill="#fff"><ellipse cx="8.7" cy="5.6" rx="2.9" ry="4.1"/><ellipse cx="15.3" cy="5.6" rx="2.9" ry="4.1"/></g>
+        <g fill="#0A3F52" opacity=".78"><ellipse cx="8.7" cy="5.8" rx="1.3" ry="2.3"/><ellipse cx="15.3" cy="5.8" rx="1.3" ry="2.3"/></g>
+        <ellipse cx="12" cy="15.6" rx="7.9" ry="7.4" fill="#fff"/>
+        <g fill="#0A3F52" opacity=".78">
+          <rect x="6.7" y="14.35" width="5.2" height="2.3" rx="1.15" transform="rotate(-33 9.3 15.5)"/>
+          <rect x="12.1" y="14.35" width="5.2" height="2.3" rx="1.15" transform="rotate(33 14.7 15.5)"/>
+        </g>
+      </svg>
+    </div>
+    <svg class="deco s1" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0l2.6 9.4L24 12l-9.4 2.6L12 24l-2.6-9.4L0 12l9.4-2.6z"/></svg>
+    <svg class="deco s2" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0l2.6 9.4L24 12l-9.4 2.6L12 24l-2.6-9.4L0 12l9.4-2.6z"/></svg>
+    <svg class="deco s3" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0l2.6 9.4L24 12l-9.4 2.6L12 24l-2.6-9.4L0 12l9.4-2.6z"/></svg>
+    <svg class="deco leaf" viewBox="0 0 34 30" aria-hidden="true">
+      <path d="M4 2c9 1 15 8 14 20C9 21 3 13 4 2z" fill="#8FE069"/>
+      <path d="M17 22c2-7 8-10 15-8-1 8-7 12-15 8z" fill="#6FCF4F"/>
+    </svg>
+    <h1>romugaboo</h1>
+    <p class="tagline">desenvolvedora e streamer c:</p>
+  </header>
+
+  <nav class="grid" aria-label="Links">
+    <a class="win wide" href="https://romugaboo.gumroad.com/l/zen-aero" target="_blank" rel="noopener">
+      <div class="bar"><span>widgets.exe</span><span class="dots"><i></i><i></i><i></i></span></div>
+      <div class="body">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="4" width="8" height="7" rx="2"/><rect x="13" y="4" width="8" height="11" rx="2"/><rect x="3" y="13" width="8" height="7" rx="2"/><rect x="13" y="17" width="8" height="3" rx="1.5"/>
+        </svg>
+        <div class="text">
+          <div class="name">Widgets para o desktop</div>
+          <div class="hint">Zen Aero, skins para Rainmeter</div>
+        </div>
+        <span class="go" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </div>
+    </a>
+
+    <a class="win" href="https://www.twitch.tv/romugaboo" target="_blank" rel="noopener">
+      <div class="bar"><span>twitch.exe</span><span class="dots"><i></i><i></i><i></i></span></div>
+      <div class="body">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M5 3h15v10l-4 4h-4l-3 3v-3H5z"/><path d="M11 7v4M16 7v4"/>
+        </svg>
+        <div class="name">Twitch</div>
+      </div>
+    </a>
+
+    <a class="win" href="https://www.youtube.com/@romugaboo" target="_blank" rel="noopener">
+      <div class="bar"><span>youtube.exe</span><span class="dots"><i></i><i></i><i></i></span></div>
+      <div class="body">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="2.5" y="5.5" width="19" height="13" rx="4"/><path d="M10 9.2v5.6l4.8-2.8z"/>
+        </svg>
+        <div class="name">YouTube</div>
+      </div>
+    </a>
+
+    <a class="win" href="https://www.instagram.com/romugaboo" target="_blank" rel="noopener">
+      <div class="bar"><span>insta.exe</span><span class="dots"><i></i><i></i><i></i></span></div>
+      <div class="body">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r=".6" fill="currentColor"/>
+        </svg>
+        <div class="name">Instagram</div>
+      </div>
+    </a>
+
+    <a class="win" href="https://twitter.com/romugaboo" target="_blank" rel="noopener">
+      <div class="bar"><span>twitter.exe</span><span class="dots"><i></i><i></i><i></i></span></div>
+      <div class="body">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M5 4l14 16M19 4L5 20"/>
+        </svg>
+        <div class="name">Twitter</div>
+      </div>
+    </a>
+  </nav>
+
+</main>
+</body>
+</html>
