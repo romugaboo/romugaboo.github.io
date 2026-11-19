@@ -1,12 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <!-- the rabbit orb, from live-romugaboo/marca, tuned for tab size: the
        top of the orb is darker and the gloss lower and fainter, so the white
-       ears stand out instead of melting into a white highlight -->
+       ears stand out instead of melting into a white highlight; the rabbit
+       sits higher and the bottom is a deeper teal, so at 16px the face does
+       not run into the white ring -->
   <defs>
     <linearGradient id="orb" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#5FC3E2"/>
       <stop offset=".55" stop-color="#2F9DBE"/>
-      <stop offset="1" stop-color="#3FBFA4"/>
+      <stop offset="1" stop-color="#1F868C"/>
     </linearGradient>
     <linearGradient id="gloss" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#fff" stop-opacity=".35"/>
@@ -16,7 +18,7 @@
   <circle cx="32" cy="32" r="31.5" fill="#fff"/>
   <circle cx="32" cy="32" r="29.5" fill="url(#orb)"/>
   <ellipse cx="32" cy="14" rx="22" ry="9" fill="url(#gloss)"/>
-  <g transform="translate(6.8 5.4) scale(2.1)">
+  <g transform="translate(6.8 2.4) scale(2.1)">
     <g fill="#fff"><ellipse cx="8.7" cy="5.6" rx="3" ry="4.2"/><ellipse cx="15.3" cy="5.6" rx="3" ry="4.2"/></g>
     <g fill="#0A3F52" opacity=".8"><ellipse cx="8.7" cy="5.9" rx="1.5" ry="2.5"/><ellipse cx="15.3" cy="5.9" rx="1.5" ry="2.5"/></g>
     <ellipse cx="12" cy="15.6" rx="7.9" ry="7.4" fill="#fff"/>
