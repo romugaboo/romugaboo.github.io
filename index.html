@@ -77,7 +77,8 @@
     border-radius: 50%;
     overflow: hidden;
     background: linear-gradient(180deg, var(--sky-1) 0%, var(--sky-2) 30%, var(--sea) 62%, var(--mint) 84%, var(--foam) 100%);
-    box-shadow: inset 0 0 0 3px rgba(255, 255, 255, .9), 0 8px 20px rgba(4, 40, 58, .3);
+    /* no white ring: the borderless orb, like marca/dist/avatar.png */
+    box-shadow: 0 8px 20px rgba(4, 40, 58, .3);
   }
   .orb::before {
     content: "";
