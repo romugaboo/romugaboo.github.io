@@ -184,6 +184,25 @@
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .8);
   }
 
+  /* ---- language switch: a tiny glass pill in the corner ---- */
+  .lang {
+    position: absolute; right: 0; top: 0;
+    display: flex; padding: 3px; gap: 2px; border-radius: 999px;
+    background: rgba(255, 255, 255, .55);
+    -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+    box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .8), 0 3px 10px var(--shadow);
+  }
+  .lang button {
+    font: 500 12px/1 Fredoka, "Segoe UI", system-ui, sans-serif; letter-spacing: .06em;
+    color: var(--ink-soft); background: none; border: 0; cursor: pointer;
+    padding: 6px 10px; border-radius: 999px;
+  }
+  .lang button[aria-pressed="true"] {
+    color: #fff; background: linear-gradient(180deg, var(--sky-2), var(--sea));
+    text-shadow: 0 1px 0 rgba(4, 52, 78, .35);
+  }
+  .lang button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
   @media (prefers-reduced-motion: reduce) {
     .win, .bar, h1 { transition: none; }
     .win::after { display: none; }
@@ -193,6 +212,10 @@
 <body>
 <main>
   <header>
+    <div class="lang" role="group" aria-label="Idioma / Language">
+      <button type="button" data-lang="pt" aria-pressed="true">PT</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
     <!-- the rabbit, from live-romugaboo/marca/src/coelho.js -->
     <div class="orb" aria-hidden="true">
       <svg viewBox="0 0 24 24">
@@ -213,7 +236,7 @@
       <path d="M17 22c2-7 8-10 15-8-1 8-7 12-15 8z" fill="#6FCF4F"/>
     </svg>
     <h1>romugaboo</h1>
-    <p class="tagline">desenvolvedora e streamer c:</p>
+    <p class="tagline" data-en="developer and streamer c:">desenvolvedora e streamer c:</p>
   </header>
 
   <nav class="grid" aria-label="Links">
@@ -225,9 +248,9 @@
           <rect x="3" y="4" width="8" height="7" rx="2"/><rect x="13" y="4" width="8" height="11" rx="2"/><rect x="3" y="13" width="8" height="7" rx="2"/><rect x="13" y="17" width="8" height="3" rx="1.5"/>
         </svg>
         <div class="text">
-          <div class="name">Widgets para o desktop</div>
-          <div class="hint">Zen Aero, skins para Rainmeter</div>
-          <span class="coupon">cupom AERO50 · 50% off</span>
+          <div class="name" data-en="Desktop widgets">Widgets para o desktop</div>
+          <div class="hint" data-en="Zen Aero, Rainmeter skins">Zen Aero, skins para Rainmeter</div>
+          <span class="coupon" data-en="code AERO50 · 50% off">cupom AERO50 · 50% off</span>
         </div>
         <span class="go" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -274,8 +297,58 @@
         <div class="name">Twitter</div>
       </div>
     </a>
+
+    <!-- the public contact address (the personal one never goes here) -->
+    <a class="win wide" href="mailto:hi.romugaboo@proton.me">
+      <div class="bar"><span data-en="contact.exe">contato.exe</span><span class="dots"><i></i><i></i><i></i></span></div>
+      <div class="body">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="5.5" width="18" height="13" rx="3"/><path d="M3.8 7.2l8.2 6 8.2-6"/>
+        </svg>
+        <div class="text">
+          <div class="name" data-en="Contact">Contato</div>
+          <div class="hint">hi.romugaboo@proton.me</div>
+        </div>
+        <span class="go" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </div>
+    </a>
   </nav>
 
 </main>
+<script>
+  // Portuguese is written in the page; English lives in data-en. The
+  // language comes from ?lang=pt|en, then the visitor's last pick, then
+  // the browser language (anything that isn't Portuguese gets English).
+  (function () {
+    var meta = {
+      pt: { title: "romugaboo", desc: "Lives, vídeos e widgets da romugaboo. Todos os links em um lugar só." },
+      en: { title: "romugaboo", desc: "romugaboo's streams, videos and widgets. All the links in one place." }
+    };
+    var els = document.querySelectorAll("[data-en]");
+    for (var i = 0; i < els.length; i++) els[i].setAttribute("data-pt", els[i].textContent);
+    function pick() {
+      var q = (location.search.match(/[?&]lang=(pt|en)/) || [])[1];
+      if (q) return q;
+      try { var saved = localStorage.getItem("lang"); if (saved === "pt" || saved === "en") return saved; } catch (e) {}
+      return /^pt/i.test(navigator.language || "") ? "pt" : "en";
+    }
+    function apply(lang) {
+      document.documentElement.lang = lang === "pt" ? "pt-BR" : "en";
+      for (var i = 0; i < els.length; i++) els[i].textContent = els[i].getAttribute("data-" + lang);
+      var d = document.querySelector('meta[name="description"]'); if (d) d.content = meta[lang].desc;
+      var b = document.querySelectorAll(".lang button");
+      for (var j = 0; j < b.length; j++) b[j].setAttribute("aria-pressed", String(b[j].getAttribute("data-lang") === lang));
+    }
+    var btns = document.querySelectorAll(".lang button");
+    for (var k = 0; k < btns.length; k++) btns[k].addEventListener("click", function () {
+      var lang = this.getAttribute("data-lang");
+      try { localStorage.setItem("lang", lang); } catch (e) {}
+      apply(lang);
+    });
+    apply(pick());
+  })();
+</script>
 </body>
 </html>
